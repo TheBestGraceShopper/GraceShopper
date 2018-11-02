@@ -20,6 +20,7 @@ class SingleProduct extends React.Component {
     componentDidMount() {
       this.props.getAProduct(this.props.match.params.productId);
       this.getLocalStorage();
+    //   this.addToCart(this.props.selectedProduct)
     }
 
     getLocalStorage() {

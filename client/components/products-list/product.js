@@ -6,12 +6,12 @@ export default class Product extends Component {
     
     handleClick(){
       let cart= this.props.addProductToCart(this.props.product, this.props.userId);
-      console.log('HELLO IS THIS THE CART', cart)
+  
        // localStorage.setItem('cart', )
     }
   
     render() {
-      console.log('WHAT ARE PROPS', this.props);
+
     return (
 
       <div className="product-small">
