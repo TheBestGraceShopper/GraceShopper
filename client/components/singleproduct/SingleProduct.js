@@ -20,7 +20,7 @@ class SingleProduct extends React.Component {
     componentDidMount() {
       this.props.getAProduct(this.props.match.params.productId);
       this.getLocalStorage();
-    //   this.addToCart(this.props.selectedProduct)
+      this.addToCart(this.props.selectedProduct)
     }
 
     getLocalStorage() {
@@ -43,7 +43,7 @@ class SingleProduct extends React.Component {
         localStorage.setItem('cart', JSON.stringify(product))
         var cartValue = localStorage.getItem('cart')
         var cartObj = JSON.parse(cartValue)
-        this.setState(cartObj)
+        this.setState({cart: [...cart], cartObj})
       }
     
  

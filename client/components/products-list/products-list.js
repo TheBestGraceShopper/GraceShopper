@@ -23,8 +23,9 @@ class ProductsListComp extends Component {
     await this.props.fetchProducts();
     this.setState({
       products: this.props.products
-    })
+    })      
   }
+
 
   handleChange(whatToFilter) {
     this.setState({filterTitle: filterTitle(whatToFilter) })
