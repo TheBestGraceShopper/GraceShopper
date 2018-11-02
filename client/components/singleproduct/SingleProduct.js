@@ -7,13 +7,49 @@ import AddToCart from '../cart/AddToCart'
 
 
 class SingleProduct extends React.Component {
-    componentDidMount() {
-      this.props.getAProduct(this.props.match.params.productId)
+    constructor(){
+        super();
+        this.state = {
+            cart: []
+        }
+        
+        this.getLocalStorage = this.getLocalStorage.bind(this)
+        this.addToCart = this.addToCart.bind(this)
     }
 
-    render() {
-        const {selectedProduct} = this.props
+    componentDidMount() {
+      this.props.getAProduct(this.props.match.params.productId);
+      this.getLocalStorage();
+    }
 
+    getLocalStorage() {
+        for (let key in this.state) {
+          if (localStorage.hasOwnProperty(key)) {
+            let value = localStorage.getItem(key)
+            try {
+              value = JSON.parse(value)
+              this.setState([{[key]: value}])
+            } catch (e) {
+              this.setState([{[key]: value}])
+            }
+          }
+        }
+      }
+
+      addToCart(product) {
+        let cart = this.state.cart
+        cart.push(product)
+        localStorage.setItem('cart', JSON.stringify(product))
+        var cartValue = localStorage.getItem('cart')
+        var cartObj = JSON.parse(cartValue)
+        this.setState(cartObj)
+      }
+    
+ 
+    render() {
+        console.log('LOCAL STORATE', localStorage)
+        console.log('CARRRRT', this.state.cart)
+        const {selectedProduct} = this.props
         if (!selectedProduct.id) {
            return 'Loading the product...'
         }
@@ -26,7 +62,11 @@ class SingleProduct extends React.Component {
                 <img src={selectedProduct.imageURL} />
                 <p>Description: {selectedProduct.description}</p>
                 <h2>Price: {selectedProduct.price}</h2>
-                <AddToCart selectedProduct={selectedProduct} />
+                <AddToCart
+                 selectedProduct={selectedProduct}
+                 cart={this.state.cart}
+                 addToCart={this.addToCart}
+             />
             </div>
             <div>
               <Review productId={selectedProduct.id}/>
@@ -35,6 +75,8 @@ class SingleProduct extends React.Component {
         )
     }
 }
+
+
 
 const mapStateToProps = state => ({
     selectedProduct: state.productsReducer.selectedProduct

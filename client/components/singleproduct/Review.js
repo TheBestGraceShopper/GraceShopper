@@ -28,7 +28,7 @@ class Review extends React.Component {
     this.setState({[e.target.name] : e.target.value})
   }
   render() {
-    console.log(this.props.reviews)
+  
     return (
     <div>
       <h3> Reviews: </h3>
