@@ -1,11 +1,33 @@
 import React from 'react'
 import {connect} from 'react-redux'
+
+import {fetchAProduct} from '../../store'
+import {addProductToCart, removeProductToCart} from '../../store/order'
+
+
 import { fetchAProduct, fetchReviews, postReview} from '../../store'
+
 import Review from './Review'
 import AddToCart from '../cart/AddToCart'
 
 
 class SingleProduct extends React.Component {
+
+    constructor(){
+        super();
+        this.state = {
+            cart: []
+        }
+        
+        this.getLocalStorage = this.getLocalStorage.bind(this)
+        this.addToCart = this.addToCart.bind(this)
+    }
+
+    componentDidMount() {
+      this.props.getAProduct(this.props.match.params.productId);
+      this.getLocalStorage();
+      this.addToCart(this.props.selectedProduct)
+
   constructor() {
     super();
     this.state = {
@@ -31,9 +53,36 @@ class SingleProduct extends React.Component {
     }
     handleChange (e) {
       this.setState({[e.target.name] : e.target.value})
+
     }
 
+    getLocalStorage() {
+        for (let key in this.state) {
+          if (localStorage.hasOwnProperty(key)) {
+            let value = localStorage.getItem(key)
+            try {
+              value = JSON.parse(value)
+              this.setState([{[key]: value}])
+            } catch (e) {
+              this.setState([{[key]: value}])
+            }
+          }
+        }
+      }
+
+      addToCart(product) {
+        let cart = this.state.cart
+        cart.push(product)
+        localStorage.setItem('cart', JSON.stringify(product))
+        var cartValue = localStorage.getItem('cart')
+        var cartObj = JSON.parse(cartValue)
+        this.setState({cart: [...cart, cartObj]})
+      }
+    
+ 
     render() {
+        console.log('LOCAL STORATE', localStorage)
+        console.log('CARRRRT', this.state.cart)
         const {selectedProduct} = this.props
         if (!selectedProduct.id) {
            return 'Loading the product...'
@@ -47,7 +96,11 @@ class SingleProduct extends React.Component {
                 <img src={selectedProduct.imageURL} />
                 <p>Description: {selectedProduct.description}</p>
                 <h2>Price: {selectedProduct.price}</h2>
-                <AddToCart selectedProduct={selectedProduct} />
+                <AddToCart
+                 selectedProduct={selectedProduct}
+                 cart={this.state.cart}
+                 addToCart={this.addToCart}
+             />
             </div>
             <div>
               <Review state={this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit} reviews={this.props.reviews} productId={selectedProduct.id}/>
@@ -56,6 +109,8 @@ class SingleProduct extends React.Component {
         )
     }
 }
+
+
 
 const mapStateToProps = state => ({
     selectedProduct: state.productsReducer.selectedProduct,

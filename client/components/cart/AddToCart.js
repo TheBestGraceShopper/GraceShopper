@@ -9,9 +9,10 @@ class AddToCart extends Component {
         this.setState(cart)
     }
 
+
     render(){
         return (
-            <button type='button' onClick={() => this.addCart(this.props.products)}>
+            <button type='button' onClick={() => this.props.addToCart(this.props.selectedProduct)}>
             Add To Cart
             </button>
         )
