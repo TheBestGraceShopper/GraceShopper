@@ -28,8 +28,8 @@
 //     )
 //   }
 
-const CartPage = () => {
-  const cartItems = JSON.parse(localStorage.getItem('cart'))
+// const CartPage = () => {
+//   const cartItems = JSON.parse(localStorage.getItem('cart'))
 
 
 // export default CartPage;
