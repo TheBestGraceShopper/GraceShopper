@@ -16,15 +16,6 @@ class CreateProduct extends React.Component {
         stock: '',
         imageURL: ''
       }
-    
-    this.state = {
-      category: '',
-      name: '',
-      description: '',
-      price: '',
-      stock: '',
-      imageURL: ''
-    }
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this)
