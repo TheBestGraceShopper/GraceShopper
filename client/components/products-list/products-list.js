@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { fetchProducts, removeAProduct } from '../../store/product'
 import { addProduct } from '../../store/order'
 import { me } from '../../store/user'
+import CartButton from "../cart/Cart-Button";
 
 class ProductsListComp extends Component {
   constructor() {
@@ -23,8 +24,9 @@ class ProductsListComp extends Component {
     await this.props.fetchProducts();
     this.setState({
       products: this.props.products
-    })
+    })      
   }
+
 
   handleChange(whatToFilter) {
     this.setState({filteredProducts: whatToFilter })
@@ -42,7 +44,7 @@ class ProductsListComp extends Component {
       }
 
     return (
-
+      //what is this submit button??
       <div>
         <button type="submit" form="test" value="Submit">Submit</button>
         <FilterBar handleChange={this.handleChange} products={this.state.products}/>
