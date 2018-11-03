@@ -66,8 +66,7 @@ class SingleProduct extends React.Component {
         var cartObj = JSON.parse(cartValue)
         this.setState({cart: [...cart, cartObj]})
       }
-    
- 
+  
     render() {
         console.log('LOCAL STORATE', localStorage)
         console.log('CARRRRT', this.state.cart)
