@@ -1,10 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-
-import {fetchAProduct} from '../../store'
 import {addProductToCart, removeProductToCart} from '../../store/order'
-
-
 import { fetchAProduct, fetchReviews, postReview} from '../../store'
 
 import Review from './Review'
@@ -13,21 +9,6 @@ import AddToCart from '../cart/AddToCart'
 
 class SingleProduct extends React.Component {
 
-    constructor(){
-        super();
-        this.state = {
-            cart: []
-        }
-        
-        this.getLocalStorage = this.getLocalStorage.bind(this)
-        this.addToCart = this.addToCart.bind(this)
-    }
-
-    componentDidMount() {
-      this.props.getAProduct(this.props.match.params.productId);
-      this.getLocalStorage();
-      this.addToCart(this.props.selectedProduct)
-
   constructor() {
     super();
     this.state = {
@@ -35,16 +16,23 @@ class SingleProduct extends React.Component {
       rating: '',
       productId: '',
       userId: '',
+      cart: []
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.getLocalStorage = this.getLocalStorage.bind(this)
+    this.addToCart = this.addToCart.bind(this)
   }
     async componentDidMount() {
+    // this.props.getAProduct(this.props.match.params.productId);
       const productId = this.props.match.params.productId
       await this.props.getAProduct(productId)
       await this.props.getReviews(productId);
       this.setState({userId: this.props.userId, productId: productId});
+      this.getLocalStorage();
+      this.addToCart(this.props.selectedProduct)
     }
+
     handleSubmit (e) {
       e.preventDefault(e);
       const review = {text: this.state.text, rating: Number(this.state.rating), userId: this.state.userId, productId: this.state.productId}
