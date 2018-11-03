@@ -75,4 +75,37 @@ form div {
   color: red;
 }
 
-/* ======================== single product ==================================== */
+/* ======================== shopping cart ==================================== */
+
+#shopping-cart {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 2;
+}
+
+#shopping-cart-image {
+  height: 40px;
+  width: 40px;
+  border-style: outset;
+  border-radius: 5px;
+  border-color: #5173AF;
+}
+
+.cart-number {
+  background-color: yellow;
+  height: 15px;
+  width: 15px;
+  border-radius: 15px;
+  text-align: center;
+  vertical-align: middle;
+  position: fixed;
+  top: 28px;
+  right: 24px;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+/* #shopping-cart:active {
+
+} */

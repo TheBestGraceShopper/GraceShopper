@@ -13,7 +13,7 @@ const Product = ({ product, admin, removeProduct, addProductToCart, userId, hist
       <button type="button" onClick={() => {
         removeProduct(product.id)
       }}>Delete</button>
-      <button type="button" onClick={() => addProductToCart(product, userId)}>Add To Cart</button>
+      {/* <button type="button" onClick={() => addProductToCart(product, userId)}>Add To Cart</button> */}
     </div>
 
   )
