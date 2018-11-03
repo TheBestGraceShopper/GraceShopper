@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchAProduct} from '../../store'
+import {addProductToCart, removeProductToCart} from '../../store/order'
 
 import Review from './Review'
 import AddToCart from '../cart/AddToCart'
@@ -43,7 +44,7 @@ class SingleProduct extends React.Component {
         localStorage.setItem('cart', JSON.stringify(product))
         var cartValue = localStorage.getItem('cart')
         var cartObj = JSON.parse(cartValue)
-        this.setState({cart: [...cart], cartObj})
+        this.setState({cart: [...cart, cartObj]})
       }
     
  
