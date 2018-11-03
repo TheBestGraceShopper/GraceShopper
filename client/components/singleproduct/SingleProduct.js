@@ -1,13 +1,18 @@
 import React from 'react'
 import {connect} from 'react-redux'
+
 import {fetchAProduct} from '../../store'
 import {addProductToCart, removeProductToCart} from '../../store/order'
+
+
+import { fetchAProduct, fetchReviews, postReview} from '../../store'
 
 import Review from './Review'
 import AddToCart from '../cart/AddToCart'
 
 
 class SingleProduct extends React.Component {
+
     constructor(){
         super();
         this.state = {
@@ -22,6 +27,33 @@ class SingleProduct extends React.Component {
       this.props.getAProduct(this.props.match.params.productId);
       this.getLocalStorage();
       this.addToCart(this.props.selectedProduct)
+
+  constructor() {
+    super();
+    this.state = {
+      text: '',
+      rating: '',
+      productId: '',
+      userId: '',
+    }
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+    async componentDidMount() {
+      const productId = this.props.match.params.productId
+      await this.props.getAProduct(productId)
+      await this.props.getReviews(productId);
+      this.setState({userId: this.props.userId, productId: productId});
+    }
+    handleSubmit (e) {
+      e.preventDefault(e);
+      const review = {text: this.state.text, rating: Number(this.state.rating), userId: this.state.userId, productId: this.state.productId}
+      console.log(review)
+      this.props.addReview(review);
+    }
+    handleChange (e) {
+      this.setState({[e.target.name] : e.target.value})
+
     }
 
     getLocalStorage() {
@@ -71,7 +103,7 @@ class SingleProduct extends React.Component {
              />
             </div>
             <div>
-              <Review productId={selectedProduct.id}/>
+              <Review state={this.state} handleChange={this.handleChange} handleSubmit={this.handleSubmit} reviews={this.props.reviews} productId={selectedProduct.id}/>
             </div>
         </div>
         )
@@ -81,11 +113,15 @@ class SingleProduct extends React.Component {
 
 
 const mapStateToProps = state => ({
-    selectedProduct: state.productsReducer.selectedProduct
+    selectedProduct: state.productsReducer.selectedProduct,
+    reviews: state.review.reviews,
+    userId: state.user.id
 })
 
 const mapDispatchToProps = dispatch => ({
-    getAProduct: (id) => dispatch(fetchAProduct(id))
+    getAProduct: (id) => dispatch(fetchAProduct(id)),
+    getReviews: (productId) => dispatch(fetchReviews(productId)),
+    addReview: (review) => dispatch(postReview(review))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)

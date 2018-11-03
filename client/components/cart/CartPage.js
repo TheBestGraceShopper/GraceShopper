@@ -2,6 +2,7 @@
 // import {Link, Redirect} from 'react-router-dom'
 // import CheckoutPage from './CheckoutPage'
 
+
 // const CartPage = () => {
  
 //   return (
@@ -26,5 +27,9 @@
 //     </div>
 //     )
 //   }
+
+const CartPage = () => {
+  const cartItems = JSON.parse(localStorage.getItem('cart'))
+
 
 // export default CartPage;
